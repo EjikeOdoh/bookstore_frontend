@@ -36,6 +36,13 @@ const Cart = () => {
   const emptyCart = () => {
     dispatch(clearCart([]));
   };
+
+  const handleCheckOut = () => {
+    return alert(
+      "Thank you for coming this far. This feature will be available as soon as the management approves. Thank you once again"
+    );
+  };
+
   return (
     <div>
       <Navbar />
@@ -75,7 +82,10 @@ const Cart = () => {
               </p>
             </div>
             <div className="flex items-center justify-center mt-8">
-              <button className="bg-green-600 text-white font-bold text-2xl px-10 py-4 rounded-xl">
+              <button
+                onClick={handleCheckOut}
+                className="bg-green-600 text-white font-bold text-2xl px-10 py-4 rounded-xl"
+              >
                 CheckOut
               </button>
             </div>

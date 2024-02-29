@@ -18,7 +18,6 @@ const Home = () => {
     };
   });
 
-  const [searchList, setSearchList] = useState(updatedBookList);
   const [query, setQuery] = useState("");
 
   const handleSearch = (e) => {

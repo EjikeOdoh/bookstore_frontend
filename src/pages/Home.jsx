@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../utils/Api";
 import Navbar from "../components/Navbar";
 import { bookList } from "../assets/bookList";
 import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCart } from "../../redux/slices/cartSlice";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { selectUser } from "../../redux/slices/userSlice";
+import ReactPaginate from "react-paginate";
+import "../App.css";
 
 const Home = () => {
   const updatedBookList = bookList.map((book, index) => {
@@ -17,8 +18,24 @@ const Home = () => {
     };
   });
 
+  const [searchList, setSearchList] = useState(updatedBookList);
+  const [query, setQuery] = useState("");
+
+  const handleSearch = (e) => {
+    setQuery(e);
+    console.log(e);
+    const newArr = updatedBookList.filter((book) => {
+      return book.title.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+    });
+
+    console.table(newArr);
+  };
+
+  const [page, setPage] = useState(0);
+  const [filterData, setFilterData] = useState();
+  const n = 9;
+
   const dispatch = useDispatch();
-  const cart = useSelector(selectCart);
   const user = useSelector(selectUser);
 
   const addCart = (x) => {
@@ -39,20 +56,28 @@ const Home = () => {
 
     testurl();
   }, []);
+
+  useEffect(() => {
+    setFilterData(
+      updatedBookList.filter((item, index) => {
+        return (index >= page * n) & (index < (page + 1) * n);
+      })
+    );
+  }, [page]);
   return (
     <div>
       <Navbar />
-
       <div className="mt-6">
         <input
           type="search"
           placeholder="Search a book"
           className="w-full bg-[#EDEDED] border border-gray-500 rounded px-4 py-2"
+          value={query}
+          onChange={(e) => handleSearch(e.target.value)}
         />
       </div>
-
       <div className="mt-10">
-        {user?.userId && (
+        {user?.firstName && (
           <p className="sm:text-center font-medium">
             Hello{" "}
             <span className="font-bold text-red-500">
@@ -64,17 +89,30 @@ const Home = () => {
           Welcome to the Book Shop.
         </h1>
       </div>
-
       <div className="flex flex-wrap gap-5 justify-evenly items-center my-10">
-        {updatedBookList.map((x) => (
-          <Card
-            key={x.id}
-            title={x.title}
-            author={x.author}
-            price={x.pages}
-            onClick={() => addCart(x)}
-          />
-        ))}
+        {filterData &&
+          filterData.map((x) => (
+            <Card
+              key={x.id}
+              title={x.title}
+              author={x.author}
+              price={x.pages}
+              onClick={() => addCart(x)}
+            />
+          ))}
+      </div>
+      <div className="flex justify-center items-center">
+        <ReactPaginate
+          containerClassName={"pagination"}
+          pageClassName={"page-item"}
+          activeClassName={"activePage"}
+          onPageChange={(event) => setPage(event.selected)}
+          pageCount={Math.ceil(updatedBookList.length / n)}
+          breakLabel="..."
+          previousLabel={"Prev"}
+          nextLabel={"Next"}
+          marginPagesDisplayed={0}
+        />
       </div>
     </div>
   );

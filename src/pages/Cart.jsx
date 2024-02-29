@@ -47,7 +47,7 @@ const Cart = () => {
     <div>
       <Navbar />
       {user?.firstName ? (
-        cart.length > 1 ? (
+        cart.length >= 1 ? (
           <>
             <div className="flex flex-col gap-10 mt-10">
               {cart.map((x) => (

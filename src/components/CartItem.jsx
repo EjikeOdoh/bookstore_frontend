@@ -30,7 +30,7 @@ const CartItem = ({
       <div className="flex justify-between">
         <button
           onClick={removeItem}
-          className="bg-red-600 px-2 rounded text-white"
+          className="bg-red-600 px-4 rounded text-white text-xs"
         >
           Remove book
         </button>
@@ -41,7 +41,7 @@ const CartItem = ({
               setNum((prev) => {
                 return prev > 1 ? prev - 1 : 1;
               });
-              decrement(num);
+              decrement();
             }}
           >
             -
@@ -51,7 +51,7 @@ const CartItem = ({
             className="bg-green-500 px-2 text-white rounded"
             onClick={() => {
               setNum((prev) => prev + 1);
-              increment(num);
+              increment();
             }}
           >
             +

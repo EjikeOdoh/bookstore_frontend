@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://mbtronics-backend.onrender.com/";
+const baseURL = "https://bookstore-hybm.onrender.com/";
 
 const api = axios.create({
   baseURL,

@@ -28,15 +28,38 @@ export const cartSlice = createSlice({
 
       state.cart = [...tempCart];
     },
-    decrease: (state, action) => {},
+    increase: (state, action) => {
+      let tempCart = state.cart;
+      const selectedBook = tempCart.find((item) => item.id == action.payload);
+      const index = tempCart.indexOf(selectedBook);
+      const book = tempCart[index];
+      book.count = book.count + 1;
+
+      state.cart = [...tempCart];
+    },
+    decrease: (state, action) => {
+      let tempCart = state.cart;
+      const selectedBook = tempCart.find((item) => item.id == action.payload);
+      const index = tempCart.indexOf(selectedBook);
+      const book = tempCart[index];
+      book.count = book.count > 1 ? book.count - 1 : book.count;
+
+      state.cart = [...tempCart];
+    },
     clearCart: (state, action) => {
       state.cart = action.payload;
     },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, update, decrease } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  update,
+  increase,
+  decrease,
+} = cartSlice.actions;
 
 export const selectCart = (state) => state.cart.cart;
 export default cartSlice.reducer;

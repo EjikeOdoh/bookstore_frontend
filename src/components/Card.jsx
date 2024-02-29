@@ -2,9 +2,9 @@ import React from "react";
 
 const Card = ({ title, author, price, onClick }) => {
   return (
-    <div className="w-full md:w-1/3 lg:w-1/4 p-5 border border-gray-400 shadow-sm rounded-md">
-      <h2 className="font-bold text-2xl">{title}</h2>
-      <p className="text-xl font-medium mt-4">{author}</p>
+    <div className="w-full md:w-1/3 sm:h-[200px] sm:flex flex-col justify-between lg:w-1/4 p-5 border border-gray-400 shadow-sm rounded-md">
+      <h2 className="font-bold text-xl md:text-2xl">{title}</h2>
+      <p className="text-lg font-medium ">{author}</p>
       <div className="flex justify-between items-center mt-8">
         <p className="font-bold">
           {Intl.NumberFormat("en-NG", {
